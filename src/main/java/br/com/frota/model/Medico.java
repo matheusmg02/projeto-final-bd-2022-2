@@ -2,18 +2,18 @@ package br.com.frota.model;
 
 public class Medico extends GenericModel{
     private String crm;
-    private String pessoa;
+    private String nome;
 
-    public Medico(int id, String crm, String pessoa) {
+    public Medico(int id, String crm, String nome) {
         this.setId(id);
         this.crm = crm;
-        this.pessoa = pessoa;
+        this.nome = nome;
     }
 
-    public Medico(String crm, String pessoa) {
+    public Medico(String crm, String nome) {
         super();
         this.crm = crm;
-        this.pessoa = pessoa;
+        this.nome = nome;
     }
 
     public String getCrm() {
@@ -24,19 +24,19 @@ public class Medico extends GenericModel{
         this.crm = crm;
     }
 
-    public String getPessoa() {
-        return pessoa;
+    public String getNome() {
+        return nome;
     }
 
-    public void setPessoa(String pessoa) {
-        this.pessoa = pessoa;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     @Override
     public String toString() {
         return "Medico{" +
                 "crm='" + crm + '\'' +
-                ", pessoa='" + pessoa + '\'' +
+                ", pessoa='" + nome + '\'' +
                 '}';
     }
 }

@@ -9,7 +9,7 @@ public class Endereco extends GenericModel{
     private String cidade;
     private int laboratorioId;
 
-    public Endereco(int id,String rua, String numero, String complemento, String bairro, String cep, String cidade, int laboratorioId) {
+    public Endereco(int id, String rua, String numero, String complemento, String bairro, String cep, String cidade, int laboratorioId) {
         this.setId(id);
         this.rua = rua;
         this.numero = numero;

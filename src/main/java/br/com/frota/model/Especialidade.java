@@ -4,7 +4,7 @@ public class Especialidade extends GenericModel{
     private String descricao;
     private String observacao;
 
-    public Especialidade(int id,String descricao, String observacao) {
+    public Especialidade(int id, String descricao, String observacao) {
         this.setId(id);
         this.descricao = descricao;
         this.observacao = observacao;
