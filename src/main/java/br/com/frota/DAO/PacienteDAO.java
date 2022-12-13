@@ -2,20 +2,23 @@ package br.com.frota.DAO;
 
 import br.com.frota.model.MaterialExame;
 import br.com.frota.model.Medico;
+import br.com.frota.model.Paciente;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class MedicoDAO extends ConexaoDB{
-    private static final String INSERT_MEDICO_SQL = "INSERT INTO medico (nome, crm) VALUES (?, ?);";
-    private static final String SELECT_MEDICO_BY_ID = "SELECT id, nome, crm FROM medico WHERE id = ?";
-    private static final String SELECT_ALL_MEDICO = "SELECT * FROM medico;";
-    private static final String DELETE_MEDICO_SQL = "DELETE FROM medico WHERE id = ?;";
-    private static final String UPDATE_MEDICO_SQL = "UPDATE material_exame SET nome = ?, crm = ? WHERE id = ?;";
-    private static final String TOTAL = "SELECT count(1) FROM medico;";
+public class PacienteDAO extends ConexaoDB{
+    private static final String INSERT_PACIENTE_SQL = "INSERT INTO paciente (nome, dt_nascimento) VALUES (?, ?);";
+    private static final String SELECT_PACIENTE_BY_ID = "SELECT id, nome, dt_nascimento FROM paciente WHERE id = ?";
+    private static final String SELECT_ALL_PACIENTE = "SELECT * FROM paciente;";
+    private static final String DELETE_PACIENTE_SQL = "DELETE FROM paciente WHERE id = ?;";
+    private static final String UPDATE_PACIENTE_SQL = "UPDATE paciente SET nome = ?, dt_nascimento = ? WHERE id = ?;";
+    private static final String TOTAL = "SELECT count(1) FROM paciente;";
 
     public Integer count() {
         Integer count = 0;
@@ -34,12 +37,12 @@ public class MedicoDAO extends ConexaoDB{
         return count;
     }
 
-    public void insertMedico(Medico entidade) {
-        try (PreparedStatement preparedStatement = prepararSQL(INSERT_MEDICO_SQL,
+    public void insertMedico(Paciente entidade) {
+        try (PreparedStatement preparedStatement = prepararSQL(INSERT_PACIENTE_SQL,
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, entidade.getNome());
-            preparedStatement.setString(2, entidade.getCrm());
+            preparedStatement.setTimestamp(2, new Timestamp(entidade.getDtNascimento().getTime()));
 
             preparedStatement.executeUpdate();
 
@@ -55,17 +58,17 @@ public class MedicoDAO extends ConexaoDB{
 
     }
 
-    public Medico findById(int id) {
-        Medico entidade = null;
-        try (PreparedStatement preparedStatement = prepararSQL(SELECT_MEDICO_BY_ID)) {
+    public Paciente findById(int id) {
+        Paciente entidade = null;
+        try (PreparedStatement preparedStatement = prepararSQL(SELECT_PACIENTE_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                String material = rs.getString("material");
-                String observacao = rs.getString("observacacao");
+                String nome = rs.getString("nome");
+                Date dtNascimento = new Date(rs.getTimestamp("dt_nascimento").getTime());
 
-                entidade = new Medico(id, material, observacao);
+                entidade = new Paciente(id, nome, dtNascimento);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -75,18 +78,17 @@ public class MedicoDAO extends ConexaoDB{
         return entidade;
     }
 
-    public List<MaterialExame> selectAllMaterialExame() {
-        List<MaterialExame> entidades = new ArrayList<>();
-        try (PreparedStatement preparedStatement = prepararSQL(SELECT_ALL_MEDICO)) {
+    public List<Paciente> selectAllPaciente() {
+        List<Paciente> entidades = new ArrayList<>();
+        try (PreparedStatement preparedStatement = prepararSQL(SELECT_ALL_PACIENTE)) {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String material = rs.getString("material");
-                String observacao = rs.getString("observacacao");
+                String nome = rs.getString("material");
+                Date dtConsulta = new Date(rs.getTimestamp("dt_consulta").getTime());
 
-
-                entidades.add(new MaterialExame(id, material, observacao));
+                entidades.add(new Paciente(id, nome, dtConsulta));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -96,8 +98,8 @@ public class MedicoDAO extends ConexaoDB{
         return entidades;
     }
 
-    public boolean deleteMedico(int id) throws SQLException {
-        try (PreparedStatement statement = prepararSQL(DELETE_MEDICO_SQL)) {
+    public boolean deletePaciente(int id) throws SQLException {
+        try (PreparedStatement statement = prepararSQL(DELETE_PACIENTE_SQL)) {
             statement.setInt(1, id);
 
             return statement.executeUpdate() > 0;
@@ -106,11 +108,11 @@ public class MedicoDAO extends ConexaoDB{
         }
     }
 
-    public boolean updateMedico(Medico entidade) throws SQLException {
-        try (PreparedStatement statement = prepararSQL(UPDATE_MEDICO_SQL)) {
+    public boolean updatePaciente(Paciente entidade) throws SQLException {
+        try (PreparedStatement statement = prepararSQL(UPDATE_PACIENTE_SQL)) {
 
-            statement.setString(1, entidade.getMaterial());
-            statement.setString(2, entidade.getObservacao());
+            statement.setString(1, entidade.getNome());
+            statement.setTimestamp(2, new Timestamp(entidade.getDtNascimento().getTime()));
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

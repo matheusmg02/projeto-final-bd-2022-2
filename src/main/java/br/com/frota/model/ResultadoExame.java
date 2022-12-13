@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class ResultadoExame extends GenericModel{
     private Date dtExame;
-    private int valor;
+    private String valor;
     private int composicaoId;
     private int laudoId;
 
-    public ResultadoExame(int id, Date dtExame, int valor, int composicaoId, int laudoId) {
+    public ResultadoExame(int id, Date dtExame, String valor, int composicaoId, int laudoId) {
         this.setId(id);
         this.dtExame = dtExame;
         this.valor = valor;
@@ -16,7 +16,7 @@ public class ResultadoExame extends GenericModel{
         this.laudoId = laudoId;
     }
 
-    public ResultadoExame(Date dtExame, int valor, int composicaoId, int laudoId) {
+    public ResultadoExame(Date dtExame, String valor, int composicaoId, int laudoId) {
         super();
         this.dtExame = dtExame;
         this.valor = valor;
@@ -32,11 +32,11 @@ public class ResultadoExame extends GenericModel{
         this.dtExame = dtExame;
     }
 
-    public int getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 

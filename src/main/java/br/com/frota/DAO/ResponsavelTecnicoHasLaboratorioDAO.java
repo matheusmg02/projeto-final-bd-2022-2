@@ -1,8 +1,6 @@
 package br.com.frota.DAO;
 
-import br.com.frota.model.MaterialExame;
-import br.com.frota.model.Medico;
-import br.com.frota.model.MedicoHasEspecialidade;
+import br.com.frota.model.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,12 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedicoHasResponsabilidadeDAO extends ConexaoDB{
-    private static final String INSERT_MEDICO_HAS_RESPONSABILIDADE_SQL = "INSERT INTO medico_has_responsabilidade (medico_id, especialidade_id) VALUES (?, ?);";
-    private static final String SELECT_MEDICO_HAS_RESPONSABILIDADE_BY_ID = "SELECT medico_id, especialidade_id FROM medico WHERE especialidade_id = ?";
-    private static final String SELECT_ALL_MEDICO_HAS_RESPONSABILIDADE_ = "SELECT * FROM medico_has_responsabilidade;";
-    private static final String DELETE_MEDICO_HAS_RESPONSABILIDADE_SQL = "DELETE FROM medico_has_responsabilidade WHERE id = ?;";
-    private static final String UPDATE_MEDICO_HAS_RESPONSABILIDADE_SQL = "UPDATE medico_has_responsabilidade SET medico_id = ? WHERE especialidade_i = ?;";
+public class ResponsavelTecnicoHasLaboratorioDAO extends ConexaoDB{
+    private static final String INSERT_RESPONSAVEL_TECNICO_HAS_LABORATORIO_SQL = "INSERT INTO responsavel_tecnico_has_laboratorio (responsavel_tecnico_id, laboratorio_id) VALUES (?, ?);";
+    private static final String SELECT_RESPONSAVEL_TECNICO_HAS_LABORATORIO_BY_ID = "SELECT id, responsavel_tecnico_id, laboratorio_id FROM medico WHERE laboratorio_id = ?";
+    private static final String SELECT_ALL_RESPONSAVEL_TECNICO_HAS_LABORATORIO = "SELECT * FROM responsavel_tecnico_id;";
+    private static final String DELETE_RESPONSAVEL_TECNICO_HAS_LABORATORIO_SQL = "DELETE FROM responsavel_tecnico_id WHERE id = ?;";
+    private static final String UPDATE_RESPONSAVEL_TECNICO_HAS_LABORATORIO_SQL = "UPDATE responsavel_tecnico_id SET responsavel_tecnico_id = ?, laboratorio_id = ? WHERE id = ?;";
     private static final String TOTAL = "SELECT count(1) FROM medico;";
 
     public Integer count() {
@@ -35,12 +33,12 @@ public class MedicoHasResponsabilidadeDAO extends ConexaoDB{
         return count;
     }
 
-    public void insertMedicoHasResponsabilidade(MedicoHasEspecialidade entidade) {
-        try (PreparedStatement preparedStatement = prepararSQL(INSERT_MEDICO_HAS_RESPONSABILIDADE_SQL,
+    public void insertResponsavelTecnicoHasLaboratorio(ResponsavelTecnicoHasLaboratorio entidade) {
+        try (PreparedStatement preparedStatement = prepararSQL(INSERT_RESPONSAVEL_TECNICO_HAS_LABORATORIO_SQL,
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setInt(1, entidade.getMedicoId());
-            preparedStatement.setInt(2, entidade.getEspecialidadeId());
+            preparedStatement.setInt(1, entidade.getLaboratorioId().getId());
+            preparedStatement.setInt(2, entidade.getResponsavelTecnicoId().getId());
 
             preparedStatement.executeUpdate();
 
@@ -56,17 +54,17 @@ public class MedicoHasResponsabilidadeDAO extends ConexaoDB{
 
     }
 
-    public MedicoHasEspecialidade findById(int id) {
-        MedicoHasEspecialidade entidade = null;
-        try (PreparedStatement preparedStatement = prepararSQL(SELECT_MEDICO_HAS_RESPONSABILIDADE_BY_ID)) {
+    public MaterialExame findById(int id) {
+        MaterialExame entidade = null;
+        try (PreparedStatement preparedStatement = prepararSQL(SELECT_RESPONSAVEL_TECNICO_HAS_LABORATORIO_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                int medicoId = rs.getInt("material");
-                int especialidadeId = rs.getInt("observacacao");
+                Laboratorio laboratorioId = rs.getString("laboratorio_id");
+                String observacao = rs.getString("observacacao");
 
-                entidade = new MedicoHasEspecialidade(medicoId, especialidadeId);
+                entidade = new MaterialExame(id, material, observacao);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -78,7 +76,7 @@ public class MedicoHasResponsabilidadeDAO extends ConexaoDB{
 
     public List<MaterialExame> selectAllMaterialExame() {
         List<MaterialExame> entidades = new ArrayList<>();
-        try (PreparedStatement preparedStatement = prepararSQL(SELECT_ALL_MEDICO_HAS_RESPONSABILIDADE_)) {
+        try (PreparedStatement preparedStatement = prepararSQL(SELECT_ALL_RESPONSAVEL_TECNICO_HAS_LABORATORIO)) {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -98,7 +96,7 @@ public class MedicoHasResponsabilidadeDAO extends ConexaoDB{
     }
 
     public boolean deleteLaboratorio(int id) throws SQLException {
-        try (PreparedStatement statement = prepararSQL(DELETE_MEDICO_HAS_RESPONSABILIDADE_SQL)) {
+        try (PreparedStatement statement = prepararSQL(DELETE_RESPONSAVEL_TECNICO_HAS_LABORATORIO_SQL)) {
             statement.setInt(1, id);
 
             return statement.executeUpdate() > 0;
@@ -108,7 +106,7 @@ public class MedicoHasResponsabilidadeDAO extends ConexaoDB{
     }
 
     public boolean updateMaterialExame(MaterialExame entidade) throws SQLException {
-        try (PreparedStatement statement = prepararSQL(UPDATE_MEDICO_HAS_RESPONSABILIDADE_SQL)) {
+        try (PreparedStatement statement = prepararSQL(UPDATE_RESPONSAVEL_TECNICO_HAS_LABORATORIO_SQL)) {
 
             statement.setString(1, entidade.getMaterial());
             statement.setString(2, entidade.getObservacao());

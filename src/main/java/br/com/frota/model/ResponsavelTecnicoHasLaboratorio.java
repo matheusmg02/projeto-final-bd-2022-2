@@ -1,34 +1,27 @@
 package br.com.frota.model;
 
 public class ResponsavelTecnicoHasLaboratorio extends GenericModel{
-    private int responsavelTecnicoId;
-    private int laboratorioId;
+    private ResponsavelTecnico responsavelTecnicoId;
+    private Laboratorio laboratorioId;
 
-    public ResponsavelTecnicoHasLaboratorio(int id, int responsavelTecnicoId, int laboratorioId) {
-        this.setId(id);
+    public ResponsavelTecnicoHasLaboratorio(ResponsavelTecnico responsavelTecnicoId, Laboratorio laboratorioId) {
         this.responsavelTecnicoId = responsavelTecnicoId;
         this.laboratorioId = laboratorioId;
     }
 
-    public ResponsavelTecnicoHasLaboratorio(int responsavelTecnicoId, int laboratorioId) {
-        super();
-        this.responsavelTecnicoId = responsavelTecnicoId;
-        this.laboratorioId = laboratorioId;
-    }
-
-    public int getResponsavelTecnicoId() {
+    public ResponsavelTecnico getResponsavelTecnicoId() {
         return responsavelTecnicoId;
     }
 
-    public void setResponsavelTecnicoId(int responsavelTecnicoId) {
+    public void setResponsavelTecnicoId(ResponsavelTecnico responsavelTecnicoId) {
         this.responsavelTecnicoId = responsavelTecnicoId;
     }
 
-    public int getLaboratorioId() {
+    public Laboratorio getLaboratorioId() {
         return laboratorioId;
     }
 
-    public void setLaboratorioId(int laboratorioId) {
+    public void setLaboratorioId(Laboratorio laboratorioId) {
         this.laboratorioId = laboratorioId;
     }
 

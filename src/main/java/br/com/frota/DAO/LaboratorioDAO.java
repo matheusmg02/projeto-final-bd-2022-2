@@ -15,7 +15,7 @@ public class LaboratorioDAO extends ConexaoDB{
     private static final String SELECT_ALL_LABORATORIO = "SELECT * FROM laboratorio;";
     private static final String DELETE_LABORATORIO_SQL = "DELETE FROM laboratorio WHERE id = ?;";
     private static final String UPDATE_LABORATORIO_SQL = "UPDATE laboratorio SET descricao = ?, cnes = ?, cnpj = ?, crbm = ?, nome_fantasia = ? WHERE id = ?;";
-    private static final String TOTAL = "SELECT count(1) FROM especialidade;";
+    private static final String TOTAL = "SELECT count(1) FROM laboratorio;";
 
     public Integer count() {
         Integer count = 0;

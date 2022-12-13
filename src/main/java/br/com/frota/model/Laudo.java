@@ -6,9 +6,9 @@ public class Laudo extends GenericModel{
     private String assinaturaDigital;
     private Date dtResultado;
     private String codigo;
-    private int solicitacaoExameId;
+    private SolicitacaoExame solicitacaoExameId;
 
-    public Laudo(int id, String assinaturaDigital, Date dtResultado, String codigo, int solicitacaoExameId) {
+    public Laudo(int id, String assinaturaDigital, Date dtResultado, String codigo, SolicitacaoExame solicitacaoExameId) {
         this.setId(id);
         this.assinaturaDigital = assinaturaDigital;
         this.dtResultado = dtResultado;
@@ -16,7 +16,7 @@ public class Laudo extends GenericModel{
         this.solicitacaoExameId = solicitacaoExameId;
     }
 
-    public Laudo(String assinaturaDigital, Date dtResultado, String codigo, int solicitacaoExameId) {
+    public Laudo(String assinaturaDigital, Date dtResultado, String codigo, SolicitacaoExame solicitacaoExameId) {
         super();
         this.assinaturaDigital = assinaturaDigital;
         this.dtResultado = dtResultado;
@@ -48,11 +48,11 @@ public class Laudo extends GenericModel{
         this.codigo = codigo;
     }
 
-    public int getSolicitacaoExameId() {
+    public SolicitacaoExame getSolicitacaoExameId() {
         return solicitacaoExameId;
     }
 
-    public void setSolicitacaoExameId(int solicitacaoExameId) {
+    public void setSolicitacaoExameId(SolicitacaoExame solicitacaoExameId) {
         this.solicitacaoExameId = solicitacaoExameId;
     }
 

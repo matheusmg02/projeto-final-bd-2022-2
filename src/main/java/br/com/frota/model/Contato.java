@@ -2,15 +2,15 @@ package br.com.frota.model;
 
 public class Contato extends GenericModel{
     private String telefone;
-    private int laboratorioId;
+    private Laboratorio laboratorioId;
 
-    public Contato(int id,String telefone, int laboratorioId) {
+    public Contato(int id,String telefone, Laboratorio laboratorioId) {
         this.setId(id);
         this.telefone = telefone;
         this.laboratorioId = laboratorioId;
     }
 
-    public Contato(String telefone, int laboratorioId) {
+    public Contato(String telefone, Laboratorio laboratorioId) {
         super();
         this.telefone = telefone;
         this.laboratorioId = laboratorioId;
@@ -24,11 +24,11 @@ public class Contato extends GenericModel{
         this.telefone = telefone;
     }
 
-    public int getLaboratorioId() {
+    public Laboratorio getLaboratorioId() {
         return laboratorioId;
     }
 
-    public void setLaboratorioId(int laboratorioId) {
+    public void setLaboratorioId(Laboratorio laboratorioId) {
         this.laboratorioId = laboratorioId;
     }
 

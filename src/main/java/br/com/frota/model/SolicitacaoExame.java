@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class SolicitacaoExame extends GenericModel{
     private String nomePrescrito;
-    private int consultaMedicaId;
+    private ConsultaMedica consultaMedicaId;
     private Date dtSolicitacao;
     private int habilitacaoExameId;
     private int exameId;
 
-    public SolicitacaoExame(int id, String nomePrescrito, int consultaMedicaId, Date dtSolicitacao, int habilitacaoExameId, int exameId) {
+    public SolicitacaoExame(int id, String nomePrescrito, ConsultaMedica consultaMedicaId, Date dtSolicitacao, int habilitacaoExameId, int exameId) {
         this.setId(id);
         this.nomePrescrito = nomePrescrito;
         this.consultaMedicaId = consultaMedicaId;
@@ -18,7 +18,7 @@ public class SolicitacaoExame extends GenericModel{
         this.exameId = exameId;
     }
 
-    public SolicitacaoExame(String nomePrescrito, int consultaMedicaId, Date dtSolicitacao, int habilitacaoExameId, int exameId) {
+    public SolicitacaoExame(String nomePrescrito, ConsultaMedica consultaMedicaId, Date dtSolicitacao, int habilitacaoExameId, int exameId) {
         super();
         this.nomePrescrito = nomePrescrito;
         this.consultaMedicaId = consultaMedicaId;
@@ -35,11 +35,11 @@ public class SolicitacaoExame extends GenericModel{
         this.nomePrescrito = nomePrescrito;
     }
 
-    public int getConsultaMedicaId() {
+    public ConsultaMedica getConsultaMedicaId() {
         return consultaMedicaId;
     }
 
-    public void setConsultaMedicaId(int consultaMedicaId) {
+    public void setConsultaMedicaId(ConsultaMedica consultaMedicaId) {
         this.consultaMedicaId = consultaMedicaId;
     }
 

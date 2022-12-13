@@ -12,10 +12,12 @@ import java.sql.SQLException;
 
 public class Teste {
     public static void main(String[] args) {
-        Laboratorio lab = new Laboratorio( "aaaaaaa", "aaaaaaa", "aaaaaaa", "aaaaa", "a");
-        ServicoLaboratorio servico = new ServicoLaboratorio();
+        Laboratorio lab = new Laboratorio( "proj", "teste", "----", "mat", "a");
+        ServicoLaboratorio servicoLab = new ServicoLaboratorio();
 
-        servico.salvar(lab);
+        servicoLab.salvar(lab);
+
+
     }
 }
 

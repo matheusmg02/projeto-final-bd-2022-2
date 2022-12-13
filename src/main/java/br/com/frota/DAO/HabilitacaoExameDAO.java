@@ -122,5 +122,6 @@ public class HabilitacaoExameDAO extends ConexaoDB{
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 }

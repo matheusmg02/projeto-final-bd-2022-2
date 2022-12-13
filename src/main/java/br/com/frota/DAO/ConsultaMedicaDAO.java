@@ -43,8 +43,8 @@ public class ConsultaMedicaDAO extends ConexaoDB{
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setTimestamp(1, new Timestamp(entidade.getDtConsulta().getTime()));
-            preparedStatement.setInt(2, entidade.getMedicoId());
-            preparedStatement.setInt(3, entidade.getPacienteId());
+            preparedStatement.setInt(2, entidade.getMedicoId().getId());
+            preparedStatement.setInt(3, entidade.getPacienteId().getId());
             preparedStatement.setString(4, entidade.getNomeAtendimento());
 
 

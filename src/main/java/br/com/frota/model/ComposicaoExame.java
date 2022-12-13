@@ -3,15 +3,15 @@ package br.com.frota.model;
 public class ComposicaoExame extends GenericModel{
     private String descricao;
 
-    private int unidadeMedidaId;
+    private UnidadeMedida unidadeMedidaId;
 
-    public ComposicaoExame(int id, String descricao, int unidadeMedidaId) {
+    public ComposicaoExame(int id, String descricao, UnidadeMedida unidadeMedidaId) {
         this.setId(id);
         this.descricao = descricao;
         this.unidadeMedidaId = unidadeMedidaId;
     }
 
-    public ComposicaoExame(String descricao, int unidadeMedidaId) {
+    public ComposicaoExame(String descricao, UnidadeMedida unidadeMedidaId) {
         super();
         this.descricao = descricao;
         this.unidadeMedidaId = unidadeMedidaId;
@@ -25,11 +25,11 @@ public class ComposicaoExame extends GenericModel{
         this.descricao = descricao;
     }
 
-    public int getUnidadeMedidaId() {
+    public UnidadeMedida getUnidadeMedidaId() {
         return unidadeMedidaId;
     }
 
-    public void setUnidadeMedidaId(int unidadeMedidaId) {
+    public void setUnidadeMedidaId(UnidadeMedida unidadeMedidaId) {
         this.unidadeMedidaId = unidadeMedidaId;
     }
 

@@ -1,12 +1,12 @@
 package br.com.frota.model;
 
 public class Exame extends GenericModel{
-    private int tipoExameId;
+    private TipoExame tipoExameId;
     private String descricao;
-    private int materialExameId;
+    private MaterialExame materialExameId;
     private String metodo;
 
-    public Exame(int id, int tipoExameId, String descricao, int materialExameId, String metodo) {
+    public Exame(int id, TipoExame tipoExameId, String descricao, MaterialExame materialExameId, String metodo) {
         this.setId(id);
         this.tipoExameId = tipoExameId;
         this.descricao = descricao;
@@ -14,7 +14,7 @@ public class Exame extends GenericModel{
         this.metodo = metodo;
     }
 
-    public Exame(int tipoExameId, String descricao, int materialExameId, String metodo) {
+    public Exame(TipoExame tipoExameId, String descricao, MaterialExame materialExameId, String metodo) {
         super();
         this.tipoExameId = tipoExameId;
         this.descricao = descricao;
@@ -22,11 +22,11 @@ public class Exame extends GenericModel{
         this.metodo = metodo;
     }
 
-    public int getTipoExameId() {
+    public TipoExame getTipoExameId() {
         return tipoExameId;
     }
 
-    public void setTipoExameId(int tipoExameId) {
+    public void setTipoExameId(TipoExame tipoExameId) {
         this.tipoExameId = tipoExameId;
     }
 
@@ -38,11 +38,11 @@ public class Exame extends GenericModel{
         this.descricao = descricao;
     }
 
-    public int getMaterialExameId() {
+    public MaterialExame getMaterialExameId() {
         return materialExameId;
     }
 
-    public void setMaterialExameId(int materialExameId) {
+    public void setMaterialExameId(MaterialExame materialExameId) {
         this.materialExameId = materialExameId;
     }
 

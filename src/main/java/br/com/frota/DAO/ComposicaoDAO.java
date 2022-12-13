@@ -2,6 +2,8 @@ package br.com.frota.DAO;
 
 import br.com.frota.model.Composicao;
 import br.com.frota.model.ComposicaoExame;
+import br.com.frota.model.Exame;
+import br.com.frota.model.ValorReferenciaComposicaoExame;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,9 +41,9 @@ public class ComposicaoDAO extends ConexaoDB{
         try (PreparedStatement preparedStatement = prepararSQL(INSERT_COMPOSICAO_SQL,
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setString(1, entidade.getExameId());
-            preparedStatement.setString(2, entidade.getComposicaoExameId());
-            preparedStatement.setString(3, entidade.getValorReferenciaComposicaoExameId());
+            preparedStatement.setInt(1, entidade.getExameId().getId());
+            preparedStatement.setInt(2, entidade.getComposicaoExameId().getId());
+            preparedStatement.setInt(3, entidade.getValorReferenciaComposicaoExameId().getId());
 
             preparedStatement.executeUpdate();
 
@@ -63,9 +65,9 @@ public class ComposicaoDAO extends ConexaoDB{
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                String exameId = rs.getString("exame_id");
-                String composicaoExameId = rs.getString("composicao_exame_id");
-                String valorReferenciaComposicaoExameId = rs.getString("valor_referencia_composicao_exame_id");
+                Exame exameId = rs.getInt("exame_id");
+                ComposicaoExame composicaoExameId = rs.getString("composicao_exame_id");
+                ValorReferenciaComposicaoExame valorReferenciaComposicaoExameId = rs.getString("valor_referencia_composicao_exame_id");
                 entidade = new Composicao(id, exameId, composicaoExameId, valorReferenciaComposicaoExameId);
             }
         } catch (SQLException e) {

@@ -3,13 +3,13 @@ package br.com.frota.model;
 import java.util.Date;
 
 public class ConsultaMedica extends GenericModel{
-    private int medicoId;
-    private int pacienteId;
+    private Medico medicoId;
+    private Paciente pacienteId;
 
     private Date dtConsulta;
     private String nomeAtendimento;
 
-    public ConsultaMedica(int id, int medicoId, int pacienteId, Date dtConsulta, String nomeAtendimento) {
+    public ConsultaMedica(int id, Medico medicoId, Paciente pacienteId, Date dtConsulta, String nomeAtendimento) {
         this.setId(id);
         this.medicoId = medicoId;
         this.pacienteId = pacienteId;
@@ -17,7 +17,7 @@ public class ConsultaMedica extends GenericModel{
         this.nomeAtendimento = nomeAtendimento;
     }
 
-    public ConsultaMedica(int medicoId, int pacienteId, Date dtConsulta, String nomeAtendimento) {
+    public ConsultaMedica(Medico medicoId, Paciente pacienteId, Date dtConsulta, String nomeAtendimento) {
         super();
         this.medicoId = medicoId;
         this.pacienteId = pacienteId;
@@ -25,19 +25,19 @@ public class ConsultaMedica extends GenericModel{
         this.nomeAtendimento = nomeAtendimento;
     }
 
-    public int getMedicoId() {
+    public Medico getMedicoId() {
         return medicoId;
     }
 
-    public void setMedicoId(int medicoId) {
+    public void setMedicoId(Medico medicoId) {
         this.medicoId = medicoId;
     }
 
-    public int getPacienteId() {
+    public Paciente getPacienteId() {
         return pacienteId;
     }
 
-    public void setPacienteId(int pacienteId) {
+    public void setPacienteId(Paciente pacienteId) {
         this.pacienteId = pacienteId;
     }
 

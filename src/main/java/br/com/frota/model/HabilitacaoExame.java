@@ -3,10 +3,10 @@ package br.com.frota.model;
 public class HabilitacaoExame extends GenericModel{
     private String observacao;
     private Double custo;
-    private int laboratorioId;
-    private int tipoExameId;
+    private Laboratorio laboratorioId;
+    private TipoExame tipoExameId;
 
-    public HabilitacaoExame(int id, String observacao, Double custo, int laboratorioId, int tipoExameId) {
+    public HabilitacaoExame(int id, String observacao, Double custo, Laboratorio laboratorioId, TipoExame tipoExameId) {
         this.setId(id);
         this.observacao = observacao;
         this.custo = custo;
@@ -14,7 +14,7 @@ public class HabilitacaoExame extends GenericModel{
         this.tipoExameId = tipoExameId;
     }
 
-    public HabilitacaoExame(String observacao, Double custo, int laboratorioId, int tipoExameId) {
+    public HabilitacaoExame(String observacao, Double custo, Laboratorio laboratorioId, TipoExame tipoExameId) {
         super();
         this.observacao = observacao;
         this.custo = custo;
@@ -38,19 +38,19 @@ public class HabilitacaoExame extends GenericModel{
         this.custo = custo;
     }
 
-    public int getLaboratorioId() {
+    public Laboratorio getLaboratorioId() {
         return laboratorioId;
     }
 
-    public void setLaboratorioId(int laboratorioId) {
+    public void setLaboratorioId(Laboratorio laboratorioId) {
         this.laboratorioId = laboratorioId;
     }
 
-    public int getTipoExameId() {
+    public TipoExame getTipoExameId() {
         return tipoExameId;
     }
 
-    public void setTipoExameId(int tipoExameId) {
+    public void setTipoExameId(TipoExame tipoExameId) {
         this.tipoExameId = tipoExameId;
     }
 

@@ -5,9 +5,9 @@ public class ResponsavelTecnico extends GenericModel{
     private String conselho;
     private String formacao;
     private String siglaFormacao;
-    private int siglaFormacaoId;
+    private SiglaFormacao siglaFormacaoId;
 
-    public ResponsavelTecnico(int id, String nome, String conselho, String formacao, String siglaFormacao, int siglaFormacaoId) {
+    public ResponsavelTecnico(int id, String nome, String conselho, String formacao, String siglaFormacao, SiglaFormacao siglaFormacaoId) {
         this.setId(id);
         this.nome = nome;
         this.conselho = conselho;
@@ -16,7 +16,7 @@ public class ResponsavelTecnico extends GenericModel{
         this.siglaFormacaoId = siglaFormacaoId;
     }
 
-    public ResponsavelTecnico(String nome, String conselho, String formacao, String siglaFormacao, int siglaFormacaoId) {
+    public ResponsavelTecnico(String nome, String conselho, String formacao, String siglaFormacao, SiglaFormacao siglaFormacaoId) {
         super();
         this.nome = nome;
         this.conselho = conselho;
@@ -57,11 +57,11 @@ public class ResponsavelTecnico extends GenericModel{
         this.siglaFormacao = siglaFormacao;
     }
 
-    public int getSiglaFormacaoId() {
+    public SiglaFormacao getSiglaFormacaoId() {
         return siglaFormacaoId;
     }
 
-    public void setSiglaFormacaoId(int siglaFormacaoId) {
+    public void setSiglaFormacaoId(SiglaFormacao siglaFormacaoId) {
         this.siglaFormacaoId = siglaFormacaoId;
     }
 

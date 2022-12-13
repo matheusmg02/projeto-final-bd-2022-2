@@ -7,9 +7,9 @@ public class Endereco extends GenericModel{
     private String bairro;
     private String cep;
     private String cidade;
-    private int laboratorioId;
+    private Laboratorio laboratorioId;
 
-    public Endereco(int id, String rua, String numero, String complemento, String bairro, String cep, String cidade, int laboratorioId) {
+    public Endereco(int id, String rua, String numero, String complemento, String bairro, String cep, String cidade, Laboratorio laboratorioId) {
         this.setId(id);
         this.rua = rua;
         this.numero = numero;
@@ -20,7 +20,7 @@ public class Endereco extends GenericModel{
         this.laboratorioId = laboratorioId;
     }
 
-    public Endereco(String rua, String numero, String complemento, String bairro, String cep, String cidade, int laboratorioId) {
+    public Endereco(String rua, String numero, String complemento, String bairro, String cep, String cidade, Laboratorio laboratorioId) {
         super();
         this.rua = rua;
         this.numero = numero;
@@ -79,11 +79,11 @@ public class Endereco extends GenericModel{
         this.cidade = cidade;
     }
 
-    public int getLaboratorioId() {
+    public Laboratorio getLaboratorioId() {
         return laboratorioId;
     }
 
-    public void setLaboratorioId(int laboratorioId) {
+    public void setLaboratorioId(Laboratorio laboratorioId) {
         this.laboratorioId = laboratorioId;
     }
 

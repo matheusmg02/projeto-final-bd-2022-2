@@ -108,7 +108,7 @@ public class ContatoDAO extends ConexaoDB{
         try (PreparedStatement statement = prepararSQL(UPDATE_CONTATO_SQL)) {
 
             statement.setString(1, entidade.getTelefone());
-            statement.setInt(2, entidade.getLaboratorioId());
+            statement.setInt(2, entidade.getLaboratorioId().getId());
             statement.setInt(3, entidade.getId());
 
         } catch (ClassNotFoundException e) {
