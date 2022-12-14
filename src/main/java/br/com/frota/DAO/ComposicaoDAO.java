@@ -16,7 +16,7 @@ public class ComposicaoDAO extends ConexaoDB{
     private static final String SELECT_COMPOSICAO_BY_ID = "SELECT id, exame_id, composicao_exame_id, valor_referencia_composicao_exame_id FROM composicao WHERE id = ?";
     private static final String SELECT_ALL_COMPOSICAO = "SELECT * FROM composicao;";
     private static final String DELETE_COMPOSICAO_SQL = "DELETE FROM composicao WHERE id = ?;";
-    // private static final String BUSCAR_POR_DESCRICAO_COMPOSICAO_SQL = "DELETE FROM composicao WHERE descricao = ?;";
+
     private static final String UPDATE_COMPOSICAO_SQL = "UPDATE composicao SET exame_id = ?, composicao_exame_id = ? valor_referencia_composicao_exame_id = ? WHERE id = ?;";
     private static final String TOTAL = "SELECT count(1) FROM composicao;";
 

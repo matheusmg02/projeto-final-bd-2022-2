@@ -1,25 +1,27 @@
 package br.com.frota.servico;
 
 import br.com.frota.DAO.ConsultaMedicaDAO;
+import br.com.frota.DAO.LaudoDAO;
+import br.com.frota.model.Laudo;
 
 
 import java.sql.SQLException;
 
 public class ServicoLaudo {
     private LaudoDAO laudo = new LaudoDAO();
-    public void salvar(ConsultaMedica entidade) {
-        consultaMedica.insertConsultaMedica(entidade);
+    public void salvar(Laudo entidade) {
+        laudo.insertLaudo(entidade);
     }
 
-    public ConsultaMedica buscarPorId(int id) {
-        return consultaMedica.findById(id);
+    public Laudo buscarPorId(int id) {
+        return laudo.findById(id);
     }
 
-    public void update(ConsultaMedica consMed) throws SQLException {
-        consultaMedica.updateConsultaMedica(consMed);
+    public void update(Laudo consMed) throws SQLException {
+        laudo.updateLaudo(consMed);
     }
 
     public void remover(int id) throws SQLException {
-        consultaMedica.deleteConsultaMedica(id);
+        laudo.deleteLaudo(id);
     }
 }
