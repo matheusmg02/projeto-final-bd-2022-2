@@ -21,7 +21,6 @@ public class MedicoDAO extends ConexaoDB{
         Integer count = 0;
         try (PreparedStatement preparedStatement = prepararSQL(TOTAL)) {
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 count = rs.getInt("count");
             }
@@ -30,19 +29,15 @@ public class MedicoDAO extends ConexaoDB{
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         return count;
     }
 
     public void insertMedico(Medico entidade) {
         try (PreparedStatement preparedStatement = prepararSQL(INSERT_MEDICO_SQL,
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
-
             preparedStatement.setString(1, entidade.getNome());
             preparedStatement.setString(2, entidade.getCrm());
-
             preparedStatement.executeUpdate();
-
             ResultSet result = preparedStatement.getGeneratedKeys();
             if (result.next()) {
                 entidade.setId(result.getInt(1));
@@ -52,7 +47,6 @@ public class MedicoDAO extends ConexaoDB{
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public Medico findById(int id) {
@@ -60,12 +54,11 @@ public class MedicoDAO extends ConexaoDB{
         try (PreparedStatement preparedStatement = prepararSQL(SELECT_MEDICO_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
-                String material = rs.getString("material");
-                String observacao = rs.getString("observacacao");
+                String nome = rs.getString("nome");
+                String crm = rs.getString("crm");
 
-                entidade = new Medico(id, material, observacao);
+                entidade = new Medico(id, crm, nome);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -75,18 +68,15 @@ public class MedicoDAO extends ConexaoDB{
         return entidade;
     }
 
-    public List<MaterialExame> selectAllMaterialExame() {
-        List<MaterialExame> entidades = new ArrayList<>();
+    public List<Medico> selectAllMaterialExame() {
+        List<Medico> entidades = new ArrayList<>();
         try (PreparedStatement preparedStatement = prepararSQL(SELECT_ALL_MEDICO)) {
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String material = rs.getString("material");
-                String observacao = rs.getString("observacacao");
-
-
-                entidades.add(new MaterialExame(id, material, observacao));
+                String nome = rs.getString("nome");
+                String crm = rs.getString("crm");
+                entidades.add(new Medico(id, crm, nome));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -108,10 +98,8 @@ public class MedicoDAO extends ConexaoDB{
 
     public boolean updateMedico(Medico entidade) throws SQLException {
         try (PreparedStatement statement = prepararSQL(UPDATE_MEDICO_SQL)) {
-
-            statement.setString(1, entidade.getMaterial());
-            statement.setString(2, entidade.getObservacao());
-
+            statement.setString(1, entidade.getNome());
+            statement.setString(2, entidade.getCrm());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

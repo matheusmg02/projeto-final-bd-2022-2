@@ -2,6 +2,7 @@ package br.com.frota.DAO;
 import br.com.frota.model.ComposicaoExame;
 import br.com.frota.model.ConsultaMedica;
 import br.com.frota.model.Contato;
+import br.com.frota.model.Laboratorio;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,6 @@ public class ContatoDAO extends ConexaoDB{
     private static final String SELECT_CONTATO_BY_ID = "SELECT id, descricao, unidade_medida_id FROM composicao_exame WHERE id = ?";
     private static final String SELECT_ALL_CONTATO = "SELECT * FROM contato;";
     private static final String DELETE_CONTATO_SQL = "DELETE FROM contato WHERE id = ?;";
-    //    private static final String BUSCAR_POR_DESCRICAO_MARCA_SQL = "DELETE FROM marca WHERE descricao = ?;";
     private static final String UPDATE_CONTATO_SQL = "UPDATE marca SET telefone = ?, laboratorio_id = ? WHERE id = ?;";
     private static final String TOTAL = "SELECT count(1) FROM contato;";
 
@@ -41,7 +41,7 @@ public class ContatoDAO extends ConexaoDB{
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, entidade.getTelefone());
-            preparedStatement.setInt(2, entidade.getLaboratorioId());
+            preparedStatement.setInt(2, entidade.getLaboratorioId().getId());
 
             preparedStatement.executeUpdate();
 
@@ -65,7 +65,8 @@ public class ContatoDAO extends ConexaoDB{
             while (rs.next()) {
                 String telefone = rs.getString("telefone");
                 int laboratorioId = rs.getInt("laboratorio_id");
-                entidade = new Contato(id, telefone, laboratorioId);
+                Laboratorio lab = new LaboratorioDAO().findById(laboratorioId);
+                entidade = new Contato(id, telefone, lab);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -84,7 +85,8 @@ public class ContatoDAO extends ConexaoDB{
                 int id = rs.getInt("id");
                 String telefone = rs.getString("telefone");
                 int laboratorioId = rs.getInt("unidade_medida_id");
-                entidades.add(new Contato(id, telefone, laboratorioId));
+                Laboratorio lab = new LaboratorioDAO().findById(laboratorioId);
+                entidades.add(new Contato(id, telefone, lab));
             }
         } catch (SQLException e) {
             printSQLException(e);

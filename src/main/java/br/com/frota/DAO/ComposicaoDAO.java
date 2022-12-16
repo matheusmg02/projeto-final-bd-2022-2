@@ -16,7 +16,6 @@ public class ComposicaoDAO extends ConexaoDB{
     private static final String SELECT_COMPOSICAO_BY_ID = "SELECT id, exame_id, composicao_exame_id, valor_referencia_composicao_exame_id FROM composicao WHERE id = ?";
     private static final String SELECT_ALL_COMPOSICAO = "SELECT * FROM composicao;";
     private static final String DELETE_COMPOSICAO_SQL = "DELETE FROM composicao WHERE id = ?;";
-
     private static final String UPDATE_COMPOSICAO_SQL = "UPDATE composicao SET exame_id = ?, composicao_exame_id = ? valor_referencia_composicao_exame_id = ? WHERE id = ?;";
     private static final String TOTAL = "SELECT count(1) FROM composicao;";
 
@@ -65,10 +64,15 @@ public class ComposicaoDAO extends ConexaoDB{
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                Exame exameId = rs.getInt("exame_id");
-                ComposicaoExame composicaoExameId = rs.getString("composicao_exame_id");
-                ValorReferenciaComposicaoExame valorReferenciaComposicaoExameId = rs.getString("valor_referencia_composicao_exame_id");
-                entidade = new Composicao(id, exameId, composicaoExameId, valorReferenciaComposicaoExameId);
+                int exameId = rs.getInt("exame_id");
+                ExameDAO exam = new ExameDAO();
+                Exame exame = exam.findById(exameId);
+                int composicaoExameId = rs.getInt("composicao_exame_id");
+                ComposicaoExameDAO compExame = new ComposicaoExameDAO();
+                ComposicaoExame comExame = compExame.findById(composicaoExameId);
+                int valorReferenciaComposicaoExameId = rs.getInt("valor_referencia_composicao_exame_id");
+                ValorReferenciaComposicaoExame valRef = new ValorReferenciaComposicaoExameDAO().findById(valorReferenciaComposicaoExameId);
+                entidade = new Composicao(id, exame, comExame, valRef);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -85,10 +89,15 @@ public class ComposicaoDAO extends ConexaoDB{
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String exameId = rs.getString("exame_id");
-                String composicaoExameId = rs.getString("composicao_exame_id");
-                String valorReferenciaComposicaoExameId = rs.getString("valor_referencia_composicao_exame_id");
-                entidades.add(new Composicao(id, exameId, composicaoExameId, valorReferenciaComposicaoExameId));
+                int exameId = rs.getInt("exame_id");
+                ExameDAO exam = new ExameDAO();
+                Exame exame = exam.findById(exameId);
+                int composicaoExameId = rs.getInt("composicao_exame_id");
+                ComposicaoExameDAO compExame = new ComposicaoExameDAO();
+                ComposicaoExame comExame = compExame.findById(composicaoExameId);
+                int valorReferenciaComposicaoExameId = rs.getInt("valor_referencia_composicao_exame_id");
+                ValorReferenciaComposicaoExame valRef = new ValorReferenciaComposicaoExameDAO().findById(valorReferenciaComposicaoExameId);
+                entidades.add(new Composicao(id, exame, comExame, valRef));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -110,9 +119,9 @@ public class ComposicaoDAO extends ConexaoDB{
 
     public void updateComposicao(Composicao entidade) throws SQLException {
         try (PreparedStatement statement = prepararSQL(UPDATE_COMPOSICAO_SQL)) {
-            statement.setString(1, entidade.getExameId());
-            statement.setString(2, entidade.getComposicaoExameId());
-            statement.setString(3, entidade.getValorReferenciaComposicaoExameId());
+            statement.setInt(1, entidade.getExameId().getId());
+            statement.setInt(2, entidade.getComposicaoExameId().getId());
+            statement.setInt(3, entidade.getValorReferenciaComposicaoExameId().getId());
             statement.setLong(4, entidade.getId());
 
         } catch (ClassNotFoundException e) {

@@ -37,7 +37,7 @@ public class PacienteDAO extends ConexaoDB{
         return count;
     }
 
-    public void insertMedico(Paciente entidade) {
+    public void insertPaciente(Paciente entidade) {
         try (PreparedStatement preparedStatement = prepararSQL(INSERT_PACIENTE_SQL,
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
 

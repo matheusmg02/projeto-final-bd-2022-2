@@ -1,8 +1,6 @@
 package br.com.frota.DAO;
 
-import br.com.frota.model.Composicao;
-import br.com.frota.model.ComposicaoExame;
-import br.com.frota.model.ConsultaMedica;
+import br.com.frota.model.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,10 +69,13 @@ public class ConsultaMedicaDAO extends ConexaoDB{
             while (rs.next()) {
                 Date dtConsulta = new Date(rs.getTimestamp("dt_consulta").getTime());
                 int medicoId = rs.getInt("medico_id");
+                Medico medico = new MedicoDAO().findById(medicoId);
                 String nomeAtendimento = rs.getString("nm_atendimento");
-                String valorReferenciaComposicaoExameId = rs.getString("valor_referencia_composicao_exame_id");
+                int valorReferenciaComposicaoExameId = rs.getInt("valor_referencia_composicao_exame_id");
+                ValorReferenciaComposicaoExame valorRef = new ValorReferenciaComposicaoExameDAO().findById(valorReferenciaComposicaoExameId);
                 int pacienteId = rs.getInt("paciente_id");
-                entidade = new ConsultaMedica(id, medicoId, pacienteId, dtConsulta, nomeAtendimento);
+                Paciente paciente = new PacienteDAO().findById(pacienteId);
+                entidade = new ConsultaMedica(id, medico, paciente, dtConsulta, nomeAtendimento);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -88,14 +89,17 @@ public class ConsultaMedicaDAO extends ConexaoDB{
         List<ConsultaMedica> entidades = new ArrayList<>();
         try (PreparedStatement preparedStatement = prepararSQL(SELECT_ALL_CONSULTA_MEDICA)) {
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 int id = rs.getInt("id");
                 int medicoId = rs.getInt("medico_id");
+                MedicoDAO medico = new MedicoDAO();
+                Medico medic = medico.findById(medicoId);
                 int pacienteId = rs.getInt("paciente_id");
+                PacienteDAO paciente = new PacienteDAO();
+                Paciente pacient = paciente.findById(pacienteId);
                 Date dtConsulta = new Date(rs.getTimestamp("dt_consulta").getTime());
                 String nomeAtendimento = rs.getString("nm_atendimento");
-                entidades.add(new ConsultaMedica(id, medicoId, pacienteId, dtConsulta, nomeAtendimento));
+                entidades.add(new ConsultaMedica(id, medic, pacient, dtConsulta, nomeAtendimento));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -108,7 +112,6 @@ public class ConsultaMedicaDAO extends ConexaoDB{
     public boolean deleteConsultaMedica(int id) throws SQLException {
         try (PreparedStatement statement = prepararSQL(DELETE_CONSULTA_MEDICA_SQL)) {
             statement.setInt(1, id);
-
             return statement.executeUpdate() > 0;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -118,8 +121,8 @@ public class ConsultaMedicaDAO extends ConexaoDB{
     public void updateConsultaMedica(ConsultaMedica entidade) throws SQLException {
         try (PreparedStatement statement = prepararSQL(UPDATE_CONSULTA_MEDICA_SQL)) {
             statement.setTimestamp(1, new Timestamp(entidade.getDtConsulta().getTime()));
-            statement.setInt(2, entidade.getMedicoId());
-            statement.setInt(3, entidade.getPacienteId());
+            statement.setInt(2, entidade.getMedicoId().getId());
+            statement.setInt(3, entidade.getPacienteId().getId());
             statement.setString(4, entidade.getNomeAtendimento());
             statement.setInt(5, entidade.getId());
 

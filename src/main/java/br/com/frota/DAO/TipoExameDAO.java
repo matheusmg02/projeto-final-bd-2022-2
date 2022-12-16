@@ -117,4 +117,5 @@ public class TipoExameDAO extends ConexaoDB{
         }
         return false;
     }
+
 }

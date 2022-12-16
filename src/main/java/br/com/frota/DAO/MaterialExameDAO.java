@@ -57,8 +57,8 @@ public class MaterialExameDAO extends ConexaoDB{
 
     }
 
-    public Medico findById(int id) {
-        Medico entidade = null;
+    public MaterialExame findById(int id) {
+        MaterialExame entidade = null;
         try (PreparedStatement preparedStatement = prepararSQL(SELECT_MATERIAL_EXAME_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
@@ -67,7 +67,7 @@ public class MaterialExameDAO extends ConexaoDB{
                 String nome = rs.getString("nome");
                 String crm = rs.getString("crm");
 
-                entidade = new Medico(id, crm, nome);
+                entidade = new MaterialExame(id, crm, nome);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -77,8 +77,8 @@ public class MaterialExameDAO extends ConexaoDB{
         return entidade;
     }
 
-    public List<Medico> selectAllMaterialExame() {
-        List<Medico> entidades = new ArrayList<>();
+    public List<MaterialExame> selectAllMaterialExame() {
+        List<MaterialExame> entidades = new ArrayList<>();
         try (PreparedStatement preparedStatement = prepararSQL(SELECT_ALL_MATERIAL_EXAME)) {
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -88,7 +88,7 @@ public class MaterialExameDAO extends ConexaoDB{
                 String crm = rs.getString("crm");
 
 
-                entidades.add(new Medico(id, crm, nome));
+                entidades.add(new MaterialExame(id, crm, nome));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -98,7 +98,7 @@ public class MaterialExameDAO extends ConexaoDB{
         return entidades;
     }
 
-    public boolean deleteMedico(int id) throws SQLException {
+    public boolean deleteExame(int id) throws SQLException {
         try (PreparedStatement statement = prepararSQL(DELETE_MATERIAL_EXAME_SQL)) {
             statement.setInt(1, id);
 
@@ -108,7 +108,7 @@ public class MaterialExameDAO extends ConexaoDB{
         }
     }
 
-    public boolean updateMedico(Medico entidade) throws SQLException {
+    public boolean updateExame(Medico entidade) throws SQLException {
         try (PreparedStatement statement = prepararSQL(UPDATE_MATERIAL_EXAME_SQL)) {
 
             statement.setString(1, entidade.getNome());

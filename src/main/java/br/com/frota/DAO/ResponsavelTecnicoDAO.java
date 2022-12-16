@@ -3,6 +3,7 @@ package br.com.frota.DAO;
 import br.com.frota.model.MaterialExame;
 import br.com.frota.model.Medico;
 import br.com.frota.model.ResponsavelTecnico;
+import br.com.frota.model.SiglaFormacao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,7 +44,7 @@ public class ResponsavelTecnicoDAO extends ConexaoDB{
             preparedStatement.setString(2, entidade.getConselho());
             preparedStatement.setString(3, entidade.getFormacao());
             preparedStatement.setString(4, entidade.getSiglaFormacao());
-            preparedStatement.setInt(5, entidade.getSiglaFormacaoId());
+            preparedStatement.setInt(5, entidade.getSiglaFormacaoId().getId());
 
             preparedStatement.executeUpdate();
 
@@ -64,15 +65,14 @@ public class ResponsavelTecnicoDAO extends ConexaoDB{
         try (PreparedStatement preparedStatement = prepararSQL(SELECT_RESPONSAVEL_TECNICO_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 String nome = rs.getString("nome");
                 String conselho = rs.getString("conselho");
                 String formacao = rs.getString("formacao");
                 String siglaFormacao = rs.getString("sigla_formacao");
-                int sigla_formacao_id = rs.getInt("sigla_formacao_id");
-
-                entidade = new ResponsavelTecnico(id, nome,conselho, formacao, siglaFormacao, sigla_formacao_id);
+                int siglaFormacaoId = rs.getInt("sigla_formacao_id");
+                SiglaFormacao siglaFormation = new SiglaFormacaoDAO().findById(siglaFormacaoId);
+                entidade = new ResponsavelTecnico(id, nome, conselho, formacao, siglaFormacao, siglaFormation);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -95,8 +95,8 @@ public class ResponsavelTecnicoDAO extends ConexaoDB{
                 String formacao = rs.getString("sigla_formacao");
                 String siglaFormacao = rs.getString("sigla_formacao");
                 int siglaFormacaoId = rs.getInt("sigla_formacao_id");
-
-                entidades.add(new ResponsavelTecnico(id, nome, conselho, formacao, siglaFormacao,siglaFormacaoId));
+                SiglaFormacao siglaFormation = new SiglaFormacaoDAO().findById(siglaFormacaoId);
+                entidades.add(new ResponsavelTecnico(id, nome, conselho, formacao, siglaFormacao,siglaFormation));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -123,7 +123,7 @@ public class ResponsavelTecnicoDAO extends ConexaoDB{
             statement.setString(2, entidade.getConselho());
             statement.setString(3, entidade.getFormacao());
             statement.setString(4, entidade.getSiglaFormacao());
-            statement.setInt(5, entidade.getSiglaFormacaoId());
+            statement.setInt(5, entidade.getSiglaFormacaoId().getId());
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);

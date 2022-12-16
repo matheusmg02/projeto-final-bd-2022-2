@@ -2,6 +2,8 @@ package br.com.frota.DAO;
 
 import br.com.frota.model.Exame;
 import br.com.frota.model.HabilitacaoExame;
+import br.com.frota.model.Laboratorio;
+import br.com.frota.model.TipoExame;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,8 +42,8 @@ public class HabilitacaoExameDAO extends ConexaoDB{
 
             preparedStatement.setString(1, entidade.getObservacao());
             preparedStatement.setDouble(2, entidade.getCusto());
-            preparedStatement.setInt(3, entidade.getLaboratorioId());
-            preparedStatement.setInt(4, entidade.getTipoExameId());
+            preparedStatement.setInt(3, entidade.getLaboratorioId().getId());
+            preparedStatement.setInt(4, entidade.getTipoExameId().getId());
 
             preparedStatement.executeUpdate();
 
@@ -67,8 +69,10 @@ public class HabilitacaoExameDAO extends ConexaoDB{
                 String observacao = rs.getString("observacao");
                 Double custo = rs.getDouble("custo");
                 int laboratorioId = rs.getInt("laboratorio_id");
+                Laboratorio lab = new LaboratorioDAO().findById(laboratorioId);
                 int tipoExameId = rs.getInt("tipo_exame_id");
-                entidade = new HabilitacaoExame(id, observacao, custo, laboratorioId, tipoExameId);
+                TipoExame tipoExam = new TipoExameDAO().findById(tipoExameId);
+                entidade = new HabilitacaoExame(id, observacao, custo, lab, tipoExam);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -88,8 +92,10 @@ public class HabilitacaoExameDAO extends ConexaoDB{
                 String observacao = rs.getString("observacao");
                 Double custo = rs.getDouble("custo");
                 int laboratorioId = rs.getInt("laboratorio_id");
-                int tipoExameId = rs.getInt("tipoExameId");
-                entidades.add(new HabilitacaoExame(id, observacao, custo, laboratorioId, tipoExameId));
+                Laboratorio lab = new LaboratorioDAO().findById(laboratorioId);
+                int tipoExameId = rs.getInt("tipo_exame_id");
+                TipoExame tipoExam = new TipoExameDAO().findById(tipoExameId);
+                entidades.add(new HabilitacaoExame(id, observacao, custo, lab, tipoExam));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -114,8 +120,8 @@ public class HabilitacaoExameDAO extends ConexaoDB{
 
             statement.setString(1, entidade.getObservacao());
             statement.setDouble(2, entidade.getCusto());
-            statement.setInt(3, entidade.getLaboratorioId());
-            statement.setInt(4, entidade.getTipoExameId());
+            statement.setInt(3, entidade.getLaboratorioId().getId());
+            statement.setInt(4, entidade.getTipoExameId().getId());
             statement.setInt(5, entidade.getId());
 
 

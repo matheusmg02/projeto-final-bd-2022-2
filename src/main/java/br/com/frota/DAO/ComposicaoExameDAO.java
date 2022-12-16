@@ -1,6 +1,7 @@
 package br.com.frota.DAO;
 
 import br.com.frota.model.ComposicaoExame;
+import br.com.frota.model.UnidadeMedida;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,6 @@ public class ComposicaoExameDAO extends ConexaoDB{
     private static final String SELECT_COMPOSICAO_EXAME_BY_ID = "SELECT id, descricao, unidade_medida_id FROM composicao_exame WHERE id = ?";
     private static final String SELECT_ALL_COMPOSICAO_EXAME = "SELECT * FROM composicao_exame;";
     private static final String DELETE_COMPOSICAO_EXAME_SQL = "DELETE FROM composicao_exame WHERE id = ?;";
-//    private static final String BUSCAR_POR_DESCRICAO_MARCA_SQL = "DELETE FROM marca WHERE descricao = ?;";
     private static final String UPDATE_COMPOSICAO_EXAME_SQL = "UPDATE marca SET descricao = ?, unidade_medida_id = ? WHERE id = ?;";
     private static final String TOTAL = "SELECT count(1) FROM marca;";
 
@@ -39,7 +39,7 @@ public class ComposicaoExameDAO extends ConexaoDB{
                 java.sql.Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, entidade.getDescricao());
-            preparedStatement.setInt(2, entidade.getUnidadeMedidaId());
+            preparedStatement.setInt(2, entidade.getUnidadeMedidaId().getId());
 
             preparedStatement.executeUpdate();
 
@@ -64,7 +64,8 @@ public class ComposicaoExameDAO extends ConexaoDB{
             while (rs.next()) {
                 String descricao = rs.getString("descricao");
                 int unidadeMedidaId = rs.getInt("unidade_medida_id");
-                entidade = new ComposicaoExame(id, descricao, unidadeMedidaId);
+                UnidadeMedida unidMed = new UnidadeMedidaDAO().findById(unidadeMedidaId);
+                entidade = new ComposicaoExame(id, descricao, unidMed);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -83,7 +84,8 @@ public class ComposicaoExameDAO extends ConexaoDB{
                 int id = rs.getInt("id");
                 String descricao = rs.getString("descricao");
                 int unidadeMedidaId = rs.getInt("unidade_medida_id");
-                entidades.add(new ComposicaoExame(id, descricao, unidadeMedidaId));
+                UnidadeMedida unidMed = new UnidadeMedidaDAO().findById(unidadeMedidaId);
+                entidades.add(new ComposicaoExame(id, descricao, unidMed));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -106,7 +108,7 @@ public class ComposicaoExameDAO extends ConexaoDB{
     public void updateComposicaoExame(ComposicaoExame entidade) throws SQLException {
         try (PreparedStatement statement = prepararSQL(UPDATE_COMPOSICAO_EXAME_SQL)) {
             statement.setString(1, entidade.getDescricao());
-            statement.setInt(2, entidade.getUnidadeMedidaId());
+            statement.setInt(2, entidade.getUnidadeMedidaId().getId());
             statement.setInt(3, entidade.getId());
 
         } catch (ClassNotFoundException e) {

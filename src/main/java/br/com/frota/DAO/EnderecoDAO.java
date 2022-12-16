@@ -2,6 +2,7 @@ package br.com.frota.DAO;
 
 import br.com.frota.model.Contato;
 import br.com.frota.model.Endereco;
+import br.com.frota.model.Laboratorio;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,6 @@ public class EnderecoDAO extends ConexaoDB{
     private static final String SELECT_ENDERECO_BY_ID = "SELECT id, rua, numero, complemento, bairro, cep, cidade, laboratorio_id FROM endereco WHERE id = ?";
     private static final String SELECT_ALL_ENDERECO = "SELECT * FROM endereco;";
     private static final String DELETE_ENDERECO_SQL = "DELETE FROM endereco WHERE id = ?;";
-    //    private static final String BUSCAR_POR_DESCRICAO_MARCA_SQL = "DELETE FROM marca WHERE descricao = ?;";
     private static final String UPDATE_ENDERECO_SQL = "UPDATE endereco SET rua = ?, numero = ?, complemento = ?, bairro = ?, cep = ?, cidade = ?, laboratorio_id = ? WHERE id = ?;";
     private static final String TOTAL = "SELECT count(1) FROM endereco;";
 
@@ -45,7 +45,7 @@ public class EnderecoDAO extends ConexaoDB{
             preparedStatement.setString(4, entidade.getBairro());
             preparedStatement.setString(5, entidade.getCep());
             preparedStatement.setString(6, entidade.getCidade());
-            preparedStatement.setInt(7, entidade.getLaboratorioId());
+            preparedStatement.setInt(7, entidade.getLaboratorioId().getId());
 
             preparedStatement.executeUpdate();
 
@@ -74,9 +74,11 @@ public class EnderecoDAO extends ConexaoDB{
                 String cep = rs.getString("cep");
                 String cidade = rs.getString("cidade");
                 int laboratorioId = rs.getInt("laboratorio_id");
+                LaboratorioDAO lab = new LaboratorioDAO();
+                Laboratorio laboratorio = lab.findById(laboratorioId);
 
 
-                entidade = new Endereco(id, rua, numero,complemento, bairro, cep, cidade, laboratorioId);
+                entidade = new Endereco(id, rua, numero,complemento, bairro, cep, cidade, laboratorio);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -100,7 +102,8 @@ public class EnderecoDAO extends ConexaoDB{
                 String cep = rs.getString("cep");
                 String cidade = rs.getString("cidade");
                 int laboratorioId = rs.getInt("unidade_medida_id");
-                entidades.add(new Endereco(id, rua, numero,complemento, bairro, cep, cidade, laboratorioId));
+                Laboratorio lab = new LaboratorioDAO().findById(laboratorioId);
+                entidades.add(new Endereco(id, rua, numero,complemento, bairro, cep, cidade, lab));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -129,7 +132,7 @@ public class EnderecoDAO extends ConexaoDB{
             statement.setString(4, entidade.getBairro());
             statement.setString(5, entidade.getCep());
             statement.setString(6, entidade.getCidade());
-            statement.setInt(7, entidade.getLaboratorioId());
+            statement.setInt(7, entidade.getLaboratorioId().getId());
             statement.setInt(8, entidade.getId());
 
         } catch (ClassNotFoundException e) {

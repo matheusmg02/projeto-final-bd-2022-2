@@ -71,10 +71,10 @@ public class LaudoDAO extends ConexaoDB{
                 Date dtResultado = new Date(rs.getTimestamp("dt_resultado").getTime());
                 String codigo = rs.getString("codigo");
                 int solicitacaoExameId = rs.getInt("solicitacao_exame");
+                SolicitacaoExame solicitacaoExam = new SolicitacaoExameDAO().findById(solicitacaoExameId);
 
-                SolicitacaoExame solicitacaoExame= new SolicitacaoExameDAO().findById(solicitacaoExameId);
 
-                entidade = new Laudo(id, assinaturaDigital, dtResultado, codigo, solicitacaoExame);
+                entidade = new Laudo(id, assinaturaDigital, dtResultado, codigo, solicitacaoExam);
             }
         } catch (SQLException e) {
             printSQLException(e);
